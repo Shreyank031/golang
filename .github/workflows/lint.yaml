@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      
+        with:
+          # Update the Node.js version to 20
+          node-version: 20
       - uses: golangci/golangci-lint-action@master
         with:
-          version: v1.57
+          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
+          version: v1.27
           github-token: ${{ secrets.github_token }}
