@@ -1,0 +1,17 @@
+name: Lint Go Code
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: golangci/golangci-lint-action@master
+        with:
+          version: v1.57
+          github-token: ${{ secrets.github_token }}
