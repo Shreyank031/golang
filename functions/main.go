@@ -20,6 +20,7 @@ func add(num1 int, num2 int) int {
 	return num1 + num2
 }
 
+// function that can accept a varying number of arguments.
 // Function 'ProAdd' takes a variadic number of integers as arguments
 // It calculates the sum of all the integers and returns the sum along with a string message
 func ProAdd(values ...int) (int, string) {
