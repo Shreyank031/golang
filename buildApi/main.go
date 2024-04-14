@@ -9,8 +9,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"golang.org/x/exp/rand"
-	"golang.org/x/tools/go/analysis/passes/stringintconv"
 )
 
 type Course struct {
