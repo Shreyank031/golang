@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Shreyank031/mongoapi/model"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -39,4 +40,17 @@ func init() {
 	collection = client.Database(dbName).Collection(colName)
 	//collection instasnce
 	fmt.Println("Collection instasnce is ready")
+}
+
+// MongoDB helper - file. For insertion of data into databse. A simple helper method
+//insert 1 record. It takes some data and adds the data into the mongoDB
+
+func insertOneMovie(movie model.Netflix) { //As it's a helper method, we won't be exporting it to anywhere. so small case
+	inserted, err := collection.InsertOne(context.Background(), movie) //inserts one value
+	if err != nil {
+		log.Fatal(err)
+	}
+	//whenever you add a value into the database, that value gets/recieves the unique id form db.
+	//And that unique id as a success  recieves back in the below operation.
+	fmt.Println("Inserted 1 movie in database with id: ", inserted.InsertedID)
 }
