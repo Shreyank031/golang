@@ -6,6 +6,8 @@ import (
 	"log"
 
 	"github.com/Shreyank031/mongoapi/model"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -53,4 +55,21 @@ func insertOneMovie(movie model.Netflix) { //As it's a helper method, we won't b
 	//whenever you add a value into the database, that value gets/recieves the unique id form db.
 	//And that unique id as a success  recieves back in the below operation.
 	fmt.Println("Inserted 1 movie in database with id: ", inserted.InsertedID)
+}
+
+func updateOneMovie(movieId string) {
+	id, err := primitive.ObjectIDFromHex(movieId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"Watched": true}}
+
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	//This result gives you how many value is being updated
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("modified count: ", result.ModifiedCount)
+
 }
