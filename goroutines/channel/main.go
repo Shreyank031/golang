@@ -14,21 +14,23 @@ func main() {
 	wg := &sync.WaitGroup{}
 
 	wg.Add(2) // Increment the WaitGroup counter by 2 for the two goroutines
-	go func(ch chan int, wg *sync.WaitGroup) {
+	//recieve only
+	go func(ch <-chan int, wg *sync.WaitGroup) {
 
 		val, isChannelOpenn := <-ch
 		fmt.Println(isChannelOpenn)
 		fmt.Println(val)
+		v, c := <-ch
+		fmt.Println(c)
+		fmt.Println(v)
 
-		// fmt.Println(<-ch)
-		// fmt.Println(<-ch)
 		wg.Done()
 	}(myCh, wg)
 
-	go func(ch chan int, wg *sync.WaitGroup) {
-		close(ch)
-		// ch <- 5
-		// ch <- 9
+	//send only
+	go func(ch chan<- int, wg *sync.WaitGroup) {
+		ch <- 5
+		ch <- 9
 		wg.Done()
 	}(myCh, wg)
 
