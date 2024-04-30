@@ -16,7 +16,7 @@ import (
 )
 
 // global variables
-const connectionStoring = "" //connection string for MongoDB
+const connectionStoring = "" //connection string for MongoDB. Don't forget to add yours
 const dbName = "netflix"     //Name of the mongoDB database
 const colName = "watchList"  //Name of the collection within the database
 
@@ -140,7 +140,10 @@ func CreateMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Allow-Control-Allow-Methods", "POST")
 
 	var movie model.Netflix
-	_ := json.NewDecoder(r.Body).Decode(&movie)
+	err := json.NewDecoder(r.Body).Decode(&movie)
+	if err != nil {
+		log.Fatal(err)
+	}
 	insertOneMovie(movie)
 	json.NewEncoder(w).Encode(movie)
 }
